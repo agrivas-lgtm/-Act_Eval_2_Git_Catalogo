@@ -28,6 +28,21 @@ function renderMovies() {
       </div>
     `;
 
+
+
+
+   li.innerHTML = `
+      <div>
+        <strong>${m.title}</strong>
+        <span class="badge">${m.year}</span>
+      </div>
+      <div class="actions">
+        <button class="small edt" data-action="edit">Editar</button>
+      </div>
+    `;
+
+    
+
     movieList.appendChild(li);
   }
 }
@@ -46,6 +61,30 @@ function addMovie() {
   yearInput.value = "";
   renderMovies();
 }
+
+function editMovieById(id) {
+  const movie = movies.find(m => m.id === id);
+  if (!movie) return;
+
+  const newTitle = prompt("Nuevo título:", movie.title);
+  if (newTitle === null) return;
+
+  const newYearStr = prompt("Nuevo año:", String(movie.year));
+  if (newYearStr === null) return;
+
+  const newYear = Number(newYearStr);
+
+  if (!newTitle.trim() || !newYear) {
+    alert("Datos no válidos.");
+    return;
+  }
+
+  movie.title = newTitle.trim();
+  movie.year = newYear;
+  renderMovies();
+}
+
+
 
 function deleteMovieById(id) {
   movies = movies.filter(m => m.id !== id);
